@@ -4,34 +4,19 @@ defmodule CowboyExample.Router do
   This module is also the handler module for the root
   route.
   """
-  require Logger
+  alias CowboyExample.Router.Handlers.{Root, Greet}
 
   @doc """
   Returns the list of routes configured by this web server
   """
   def routes do
     [
-      # For now, this module itself will handle root
-      # requests
-      {:_, [{"/", __MODULE__, []}]}
+      {:_,
+       [
+         {"/", Root, []},
+         # Add this line
+         {"/greet/:who", [who: :nonempty], Greet, []}
+       ]}
     ]
-  end
-
-  @doc """
-  This function handles the root route, logs the requests
-  and responds with Hello World as the body
-  """
-  def init(req0, state) do
-    Logger.info("Received request: #{inspect(req0)}")
-
-    req1 =
-      :cowboy_req.reply(
-        200,
-        %{"content-type" => "text/html"},
-        "Hello World",
-        req0
-      )
-
-    {:ok, req1, state}
   end
 end
