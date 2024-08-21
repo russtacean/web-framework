@@ -4,7 +4,7 @@ defmodule CowboyExample.Router do
   This module is also the handler module for the root
   route.
   """
-  alias CowboyExample.Router.Handlers.{Root, Greet}
+  alias CowboyExample.Router.Handlers.{Root, Greet, Static}
 
   @doc """
   Returns the list of routes configured by this web server
@@ -15,7 +15,8 @@ defmodule CowboyExample.Router do
        [
          {"/", Root, []},
          # Add this line
-         {"/greet/:who", [who: :nonempty], Greet, []}
+         {"/greet/:who", [who: :nonempty], Greet, []},
+         {"/static/:page", [page: :nonempty], Static, []}
        ]}
     ]
   end
