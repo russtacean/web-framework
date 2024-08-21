@@ -22,7 +22,8 @@ defmodule CowboyExample.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:cowboy, "~> 2.8"}
+      {:cowboy, "~> 2.8"},
+      {:finch, "~> 0.6"}
     ]
   end
 end

@@ -2,11 +2,16 @@ defmodule CowboyExample.Application do
   @moduledoc false
   use Application
 
+  @port Application.compile_env(
+          :cowboy_example,
+          :port,
+          4040
+        )
   @impl true
   def start(_type, _args) do
     children = [
       # Add this line
-      {Task, fn -> CowboyExample.Server.start(4040) end}
+      {Task, fn -> CowboyExample.Server.start(@port) end}
     ]
 
     opts = [
