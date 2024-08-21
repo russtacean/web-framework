@@ -42,4 +42,37 @@ defmodule CowboyExample.ServerTest do
       assert {"content-type", "text/html"} in response.headers
     end
   end
+
+  describe "POST /greeting/:who" do
+    test "returns 404" do
+      {:ok, response} =
+        :post
+        |> Finch.build("http://localhost:4041/greet/Elixir?greeting=Yo")
+        |> Finch.request(CowboyExample.Finch)
+
+      assert response.status == 404
+    end
+  end
+
+  describe "GET /static/:page" do
+    test "index.html returns 200" do
+      {:ok, response} =
+        :get
+        |> Finch.build("http://localhost:4041/static/index.html")
+        |> Finch.request(CowboyExample.Finch)
+
+      assert response.body == "<h1>Hello World</h1>"
+      assert response.status == 200
+      assert {"content-type", "text/html"} in response.headers
+    end
+
+    test "foo.html returns 404" do
+      {:ok, response} =
+        :get
+        |> Finch.build("http://localhost:4041/static/foo.html")
+        |> Finch.request(CowboyExample.Finch)
+
+      assert response.status == 404
+    end
+  end
 end
